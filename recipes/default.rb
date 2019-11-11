@@ -24,8 +24,10 @@ include_recipe 'git'
 # Install dependencies
 case node['platform_family']
 when 'debian'
-  package 'libcurl3' do
-    action :install
+  if !( node['platform'] == 'ubuntu' && node['platform_version'].to_f >= 18.04 )
+    package 'libcurl3' do
+      action :install
+    end
   end
 
   package 'curl' do
